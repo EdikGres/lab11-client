@@ -18,11 +18,15 @@ public class MessageReceiver implements Runnable{
         DatagramPacket dp = new DatagramPacket(buf, 1024);
         try {
             socket.receive(dp);
+            String str = new String(dp.getData(), 0, dp.getLength());
+            System.out.println("From server: " + str);
+            if(str.startsWith("@quit")){
+                System.exit(1);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String str = new String(dp.getData(), 0, dp.getLength());
-        System.out.println("From server: " + str);
     }
 
     @Override
